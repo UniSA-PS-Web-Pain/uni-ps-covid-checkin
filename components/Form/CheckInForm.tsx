@@ -31,10 +31,12 @@ const CheckInForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input inputMode="numeric" pattern="[0-9]*" type="text"
-        placeholder="Please enter UID" 
-        {...register('uid', { required: true, maxLength: 7, minLength: 7 })} 
-
+      <input
+        inputMode="numeric"
+        pattern="[0-9]*"
+        type="text"
+        placeholder="Please enter UID"
+        {...register('uid', { required: true, maxLength: 7, minLength: 7 })}
       />
       <input type="submit" value="Check In" />
       {errors.uid && (
