@@ -36,15 +36,23 @@ const RegisterForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
         placeholder="Please enter your name"
-        {...register('name', { required: true, maxLength: 26, pattern: /^[A-Za-z]+$/ })}
+        {...register('name', {
+          required: true,
+          maxLength: 26,
+          pattern: /^[A-Za-z ]+$/,
+        })}
       />
       <input
         placeholder="Please enter your email if you have one"
-        {...register('email', { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })}
+        {...register('email', {
+          pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        })}
       />
       <input
         placeholder="Please enter your phone number if you have one"
-        {...register('phone', { pattern: /^-?[0-9]\d*\.?\d*$/ })}
+        {...register('phone', {
+          pattern: /^(?:\+?61|0)[2-478](?:[ -]?[0-9]){8}$/,
+        })}
       />
       <input type="submit" value="Register" />
       {errors.name && (
