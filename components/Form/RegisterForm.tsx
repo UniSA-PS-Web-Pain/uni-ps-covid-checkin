@@ -1,6 +1,7 @@
 import type { User } from '@prisma/client';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import registerUser from '../../lib/registerUser';
 
 import styles from '../../styles/RegisterForm.module.css';
 
@@ -23,25 +24,9 @@ const RegisterForm = () => {
 
   const onSubmit = async ({ name, email, phone }: FormData) => {
     try {
-      // Use the API to create new check in
-      const response = await fetch(`/api/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-        }),
-      });
+      const user = await registerUser({ name, email, phone });
 
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const json = (await response.json()) as User;
-      setUID(json.uid);
+      setUID(user.uid);
       setStage(1);
     } catch (err: any) {
       setError(err.message);
