@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 import ReportTable from './ReportTable';
 import SearchBar from './SearchBar';
 import { fullCheckIn, searchTypes } from './types';
+import styles from '../../styles/Report/ReportTable.module.css';
 
 interface ReportProps {
   initialCheckIns: fullCheckIn[];
@@ -78,19 +79,21 @@ const Layout = ({ initialCheckIns, refresh, refreshing }: ReportProps) => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h1>Report</h1>
-      <button type="button" onClick={refresh}>
-        Click to refresh
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setCheckIns(initialCheckIns);
-        }}
-      >
-        Reset
-      </button>
+    <div className={styles.buttonContainer}>
+      <h1>Check-In Report</h1>
+      <div className={styles.anotherContainer}>
+        <button type="button" onClick={refresh}>
+          Click to refresh
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setCheckIns(initialCheckIns);
+          }}
+        >
+          Reset
+        </button>
+      </div>
       <SearchBar
         search={search}
         searchType={searchType}
