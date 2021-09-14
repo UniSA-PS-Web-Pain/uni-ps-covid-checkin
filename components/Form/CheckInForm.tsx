@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form';
 
 import checkInUser from '../../lib/checkInUser';
 import styles from '../../styles/CheckInForm.module.css';
+import Image from 'next/image';
+import userIcon from '../../public/userIcon.png';
+import Link from 'next/link';
 
 interface FormData {
   uid: string;
@@ -41,39 +44,37 @@ const CheckInForm = ({ locations }: { locations: Location[] }) => {
 
   return stage === 0 ? (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.locationWrapper}>
+        <h1>Location: {locations[0].name}</h1>
+      </div>
+
       <div className={styles.input}>
-        <label>Unique ID:</label>
+        <div className={styles.userIcon}>
+          <Image src={userIcon} alt="User Icon" />
+          <label>Unique Identifcation:</label>
+        </div>
         <input
           inputMode="numeric"
           pattern="[0-9]*"
           placeholder="Please enter UID"
           type="text"
+          required
           {...register('uid', { required: true, maxLength: 7, minLength: 7 })}
         />
       </div>
 
-      <div className={styles.locationWrapper}>
-        <div className={styles.location}>
-          <div className={styles.locationTrigger}>
-            <label>Location:</label>
-            <br></br>
-
-            <select {...register('location', { required: true })}>
-              {locations.map((location) => (
-                <option key={location.id} value={location.name}>
-                  {location.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </div>
       <br></br>
 
-      <div className={styles.submitButton}>
+      <div className={styles.buttons}>
         <button type="submit" value="Submit">
           Check-In
         </button>
+
+        <Link href="/qrtest">
+          <button type="button" value="QR Scan">
+            Scan QR
+          </button>
+        </Link>
       </div>
 
       {errors.uid && (
@@ -83,7 +84,7 @@ const CheckInForm = ({ locations }: { locations: Location[] }) => {
       )}
     </form>
   ) : stage === 1 ? (
-    <div>
+    <div className={styles.checkinButton}>
       <h1>Check-In Successful!</h1>
       <h3>{`Thank you for checking in at ${location} today ${name}`}</h3>
       <button
@@ -96,7 +97,7 @@ const CheckInForm = ({ locations }: { locations: Location[] }) => {
       </button>
     </div>
   ) : stage === 2 ? (
-    <div>
+    <div className={styles.checkinButton}>
       <h3>{error}</h3>
       <button
         onClick={() => {
